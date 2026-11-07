@@ -4,7 +4,7 @@ import pino from 'pino-http';
 import 'dotenv/config';
 
 const app = express();
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
@@ -24,11 +24,6 @@ app.use(
   }),
 );
 
-app.use((req,res,next) => {
-    console.log(`Time: ${new Date().toLocaleString()}`);
-    next();
-});
-
 app.get("/notes", (req, res) => {
   res.status(200).json({message: "Retrieved all notes"});
 });
@@ -47,8 +42,8 @@ app.use((req,res) => {
 });
 
 app.use((err, req, res, next) => {
-    console.error(err);
     res.status(500).json({
+      status: 500,
       message: err.message
     });
 });
